@@ -30,7 +30,7 @@ public class ArchivoImpl implements ArchivoDao {
     /**
      * Consulta sql para obtener todas los paquetes
      */
-    private static final String SQL_SELECT = "select * from archivo";
+    private static final String SQL_SELECT = "select * from archivo where Paqueteid_paquete = ?";
 
     private static final String SQL_INSERT = "insert into archivo(nombre) values (?)";
 
@@ -52,6 +52,7 @@ public class ArchivoImpl implements ArchivoDao {
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_SELECT);
+            pstm.setInt(1, paq.getId());
             rs = pstm.executeQuery();
             if (!rs.next()) {
                 Logger.getLogger(ArchivoImpl.class.getName()).log(Level.INFO,
@@ -60,7 +61,9 @@ public class ArchivoImpl implements ArchivoDao {
 
                 do {
                     Archivo arch = new Archivo();
+                    arch.setId(rs.getInt("id_archivo"));
                     arch.setNombre(rs.getString("nombre"));
+                    arch.setText(rs.getString("texto"));
                     System.out.println(arch.getNombre());
                     archivos.add(arch);
 

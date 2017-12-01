@@ -28,7 +28,7 @@ public class PaqueteImpl implements PaqueteDao {
     /**
      * Consulta sql para obtener todas los paquetes
      */
-    private static final String SQL_SELECT = "select * from paquete";
+    private static final String SQL_SELECT = "select * from paquete where Proyectoid_proyecto = ?";
 
     private static final String SQL_INSERT = "insert into paquete(nombre, Proyectoid_proyecto) values (?, ?)";
 
@@ -50,6 +50,8 @@ public class PaqueteImpl implements PaqueteDao {
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_SELECT);
+            pstm.setInt(1, pro.getId());
+            
             rs = pstm.executeQuery();
             if (!rs.next()) {
                 Logger.getLogger(PaqueteImpl.class.getName()).log(Level.INFO,
@@ -59,7 +61,8 @@ public class PaqueteImpl implements PaqueteDao {
                 do {
                     Paquete paq = new Paquete();
                     paq.setNombre(rs.getString("nombre"));
-
+                    paq.setId(rs.getInt("id_paquete"));
+                    System.out.println(rs.getString("Proyectoid_proyecto"));
                     paquetes.add(paq);
 
                 } while (rs.next());

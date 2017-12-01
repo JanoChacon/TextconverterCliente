@@ -58,7 +58,7 @@ public class ProyectoImpl implements ProyectoDao {
                 do {
                     Proyecto proj = new Proyecto();
                     proj.setNombre(rs.getString("nombre"));
-                    System.out.println(proj.getNombre());
+                    proj.setId(rs.getInt("id_proyecto"));
                     proyectos.add(proj);
 
                 } while (rs.next());
@@ -74,13 +74,13 @@ public class ProyectoImpl implements ProyectoDao {
     }
 
     @Override
-    public boolean guardar(Proyecto mesa) {
+    public boolean guardar(Proyecto pro) {
 
         boolean resultado = false;
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_INSERT);
-            pstm.setString(1, mesa.getNombre());
+            pstm.setString(1, pro.getNombre());
 
             pstm.executeUpdate();
             resultado = true;
@@ -90,6 +90,8 @@ public class ProyectoImpl implements ProyectoDao {
         }
         return resultado;
     }
+    
+    
 
     @Override
     public boolean borrar(int id) {

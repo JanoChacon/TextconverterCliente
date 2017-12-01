@@ -34,25 +34,37 @@ public class PanelProyectos extends JScrollPane {
     JTree tree;
     DefaultTreeModel modelo = null;
     private PanelVistaProyecto pvp;
+
+    private ProyectoDao proyectoDao;
+    private PaqueteDao paqueteDao;
+    private ArchivoDao archivoDao;
     private static DAOFactory fabrica;
+    
     public ArrayList<Proyecto> proyectos;
 
+
     public PanelProyectos(PanelVistaProyecto pvp) {
-        this.pvp = pvp;   
+        
+        fabrica = DAOFactory.getFactory(TipoBD.MYSQL);
+        
+        proyectoDao = fabrica.getProyectoDao();
+        paqueteDao = fabrica.getPaqueteDao();
+        archivoDao = fabrica.getArchivoDao();
+        
+        this.pvp = pvp;
+        
         this.initComponents();
+        
     }
 
-    private void initComponents() {      
-        fabrica = DAOFactory.getFactory(TipoBD.MYSQL);     
-        ProyectoDao proyectoDao = fabrica.getProyectoDao();
-        this.proyectos = proyectoDao.listar();
+    private void initComponents() {
 
         cargarProyectos();
 
     }
 
     void cargarProyectos() {
-        
+
         DefaultMutableTreeNode titulo = null;
         DefaultMutableTreeNode proyecto = null;
         DefaultMutableTreeNode paquete = null;
@@ -61,8 +73,10 @@ public class PanelProyectos extends JScrollPane {
         titulo = new DefaultMutableTreeNode("Proyectos");
         modelo = new DefaultTreeModel(titulo);
         
-//        proyectos.get(0).setPaquetes(PaqueteDao.listar(proyectos.get(i)));
+        crearListas();
+        
         for (int i = 0; i < proyectos.size(); i++) {
+
             proyecto = new DefaultMutableTreeNode(proyectos.get(i).getNombre());
             modelo.insertNodeInto(proyecto, titulo, 0);
 
@@ -86,19 +100,30 @@ public class PanelProyectos extends JScrollPane {
         tree.addTreeSelectionListener(createSelectionListener());
     }
 
+    public void crearListas() {
+        
+        proyectos = proyectoDao.listar();
+        for (int i = 0; i < proyectos.size(); i++) {
+            proyectos.get(i).setPaquetes(paqueteDao.listar(proyectos.get(i)));
+            for (int j = 0; j < proyectos.get(i).getPaquetes().size(); j++) {
+                proyectos.get(i).getPaquetes().get(j).setArchivos(archivoDao.listar(proyectos.get(i).getPaquetes().get(j)));
+            }
+        }
+    }
+
     private TreeSelectionListener createSelectionListener() {
         return (TreeSelectionEvent e) -> {
-            
+
             Object obj = e.getNewLeadSelectionPath().getLastPathComponent();
             System.out.println("" + obj.toString());
-            String text ="";
-            
+            String text = "";
+
             for (int i = 0; i < proyectos.size(); i++) {
                 for (int j = 0; j < proyectos.get(i).getSize(); j++) {
                     for (int k = 0; k < proyectos.get(i).getPaquete(j).getSize(); k++) {
                         if (obj.toString().equals(proyectos.get(i).getPaquete(j).getArchivo(k).getNombre())) {
-                                text = proyectos.get(i).getPaquete(j).getArchivo(k).getText();
-                                
+                            text = proyectos.get(i).getPaquete(j).getArchivo(k).getText();
+
                         }
                     }
                 }

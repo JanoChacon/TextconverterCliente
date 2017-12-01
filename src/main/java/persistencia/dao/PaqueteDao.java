@@ -6,7 +6,6 @@
 package persistencia.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 import textconverter.logic.Paquete;
 import textconverter.logic.Proyecto;
 
@@ -23,7 +22,7 @@ public interface PaqueteDao {
     
     /**
      * Almacena un objeto de tipo paquete
-     * @param proyecto
+     * @param pro
      * @return 
      */
     public boolean guardar(Paquete paquete, int proyectoid);
