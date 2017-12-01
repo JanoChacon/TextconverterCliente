@@ -1,17 +1,17 @@
 package persistencia.factory;
 
-import javax.servlet.ServletContext;
+
 import persistencia.impl.ProyectoImpl;
 import persistencia.dao.ProyectoDao;
 
 public abstract class DAOFactory {
 
-    public static DAOFactory getFactory(TipoBD bd, ServletContext context) {
+    public static DAOFactory getFactory(TipoBD bd) {
 
         switch (bd) {
 
             case MYSQL:
-                return new MysqlDaoFactory(context);
+                return new MysqlDaoFactory();
             case ORACLE:
                 throw new IllegalArgumentException();
             default:

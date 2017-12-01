@@ -20,6 +20,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import persistencia.dao.ProyectoDao;
 import persistencia.factory.DAOFactory;
+import persistencia.factory.TipoBD;
 import persistencia.impl.ProyectoImpl;
 
 /**
@@ -42,9 +43,10 @@ public class PanelProyectos extends JScrollPane {
 
     private void initComponents() {
         
+        fabrica = DAOFactory.getFactory(TipoBD.MYSQL);
         
         ProyectoDao proyectoDao = fabrica.getProyectoDao();
-        List<Proyecto> proyectos = proyectoDao.listar();
+        this.proyectos = proyectoDao.listar();
 
         cargarProyectos();
         

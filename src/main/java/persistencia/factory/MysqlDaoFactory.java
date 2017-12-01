@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
+
 
 /**
  *
@@ -19,7 +19,7 @@ public class MysqlDaoFactory extends DAOFactory {
     private static String USER;
     private static String CLAVE;
 
-    public MysqlDaoFactory(ServletContext servletContext) {
+    public MysqlDaoFactory() {
 
         MysqlDaoFactory.DRIVER = "com.mysql.jdbc.Driver";
         MysqlDaoFactory.URL = "jdbc:mysql://localhost:3306/";
