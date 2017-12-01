@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.alejandro.textconverter.logic;
+package textconverter.logic;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author Alejandro
  */
-public class Archivo {
+public class Paquete {
     
     private String nombre;
-    private String text;
+    private ArrayList<Archivo> Archivos = new ArrayList<>();
 
-    public Archivo(String nombre, String text) {
+    public Paquete(String nombre) {
         this.nombre = nombre;
-        this.text = text;
     }
 
     public String getNombre() {
@@ -26,13 +27,17 @@ public class Archivo {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public String getText() {
-        return text;
+      
+    public Archivo getArchivo(int i){
+        return this.Archivos.get(i);
+    }    
+    
+    public int getSize(){
+        return this.Archivos.size();
     }
-
-    public void setText(String text) {
-        this.text = text;
+    
+    public void addArchivo(Archivo archivo){
+        this.Archivos.add(archivo);
     }
- 
+     
 }

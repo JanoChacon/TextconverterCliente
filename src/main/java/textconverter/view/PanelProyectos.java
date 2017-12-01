@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.alejandro.textconverter.view;
+package textconverter.view;
 
-import cl.alejandro.textconverter.logic.Archivo;
-import cl.alejandro.textconverter.logic.Paquete;
-import cl.alejandro.textconverter.logic.Proyecto;
+import textconverter.logic.Archivo;
+import textconverter.logic.Paquete;
+import textconverter.logic.Proyecto;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
@@ -17,6 +18,9 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import persistencia.dao.ProyectoDao;
+import persistencia.factory.DAOFactory;
+import persistencia.impl.ProyectoImpl;
 
 /**
  *
@@ -26,8 +30,9 @@ public class PanelProyectos extends JScrollPane {
 
     JTree tree;
     DefaultTreeModel modelo = null;
-    public ArrayList<Proyecto> proyectos = new ArrayList<>();
     private PanelVistaProyecto pvp;
+    private static DAOFactory fabrica;
+    public List<Proyecto> proyectos;
 
     public PanelProyectos(PanelVistaProyecto pvp) {
         this.pvp = pvp;
@@ -37,31 +42,17 @@ public class PanelProyectos extends JScrollPane {
 
     private void initComponents() {
         
-        //aca iria la llamada al metodo que rescata la estructura de la database
         
-        Proyecto pro1 = new Proyecto("proyecto1");
-        Paquete paq1 = new Paquete("paquete1");
-        Archivo ar1 = new Archivo("archivo1", "hola hola hola");
-        
-        pro1.addPaquete(paq1);
-        pro1.getPaquete(0).addArchivo(ar1);
-        proyectos.add(pro1);
+        ProyectoDao proyectoDao = fabrica.getProyectoDao();
+        List<Proyecto> proyectos = proyectoDao.listar();
 
-        Proyecto pro2 = new Proyecto("proyecto2");
-        Paquete paq2 = new Paquete("paquete2");
-        Archivo ar2 = new Archivo("archivo2", "hola2 hola2 hola2");
-
-        pro2.addPaquete(paq2);
-        pro2.getPaquete(0).addArchivo(ar2);
-        proyectos.add(pro2);
-        
         cargarProyectos();
         
         
     }
 
     void cargarProyectos() {
-
+        
         DefaultMutableTreeNode titulo = null;
         DefaultMutableTreeNode proyecto = null;
         DefaultMutableTreeNode paquete = null;

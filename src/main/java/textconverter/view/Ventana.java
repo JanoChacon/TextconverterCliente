@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.alejandro.textconverter.view;
+package textconverter.view;
 
-import cl.alejandro.textconverter.logic.Archivo;
-import cl.alejandro.textconverter.logic.Paquete;
-import cl.alejandro.textconverter.logic.Proyecto;
+import textconverter.logic.Archivo;
+import textconverter.logic.Paquete;
+import textconverter.logic.Proyecto;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

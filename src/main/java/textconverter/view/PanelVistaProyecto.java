@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.alejandro.textconverter.view;
+package textconverter.view;
 
-import cl.alejandro.textconverter.logic.Proyecto;
+import textconverter.logic.Proyecto;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;

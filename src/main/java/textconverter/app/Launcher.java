@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.alejandro.textconverter.app;
+package textconverter.app;
 
-import cl.alejandro.textconverter.logic.Archivo;
-import cl.alejandro.textconverter.logic.Paquete;
-import cl.alejandro.textconverter.logic.Proyecto;
-import cl.alejandro.textconverter.view.Ventana;
+import textconverter.logic.Archivo;
+import textconverter.logic.Paquete;
+import textconverter.logic.Proyecto;
+import textconverter.view.Ventana;
 
 /**
  *

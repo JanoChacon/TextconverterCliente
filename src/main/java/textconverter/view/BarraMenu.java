@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.alejandro.textconverter.view;
+package textconverter.view;
 
-import cl.alejandro.textconverter.logic.Proyecto;
+import textconverter.logic.Proyecto;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -68,7 +68,8 @@ public class BarraMenu extends JPanel {
         String ax = "";
         ax = JOptionPane.showInputDialog("Ingrese un nombre: ");
         if (!ax.equalsIgnoreCase("")) {
-            Proyecto pro = new Proyecto(ax);
+            Proyecto pro = new Proyecto();
+            pro.setNombre(ax);
             pnp.proyectos.add(pro);
             pnp.cargarProyectos();
         } else {

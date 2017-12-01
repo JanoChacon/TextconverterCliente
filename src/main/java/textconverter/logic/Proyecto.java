@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.alejandro.textconverter.logic;
+package textconverter.logic;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,7 @@ public class Proyecto {
     private String nombre;
     private ArrayList<Paquete> Paquetes = new ArrayList<>();
 
-    public Proyecto(String nombre) {
-        this.nombre = nombre;
+    public Proyecto() {
     }
 
     public String getNombre() {
