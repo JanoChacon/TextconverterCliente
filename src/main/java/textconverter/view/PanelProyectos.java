@@ -5,6 +5,7 @@
  */
 package textconverter.view;
 
+import java.awt.Color;
 import textconverter.logic.Archivo;
 import textconverter.logic.Paquete;
 import textconverter.logic.Proyecto;
@@ -72,7 +73,7 @@ public class PanelProyectos extends JScrollPane {
 
         titulo = new DefaultMutableTreeNode("Proyectos");
         modelo = new DefaultTreeModel(titulo);
-        
+        boolean repetido = false;
         crearListas();
         
         for (int i = 0; i < proyectos.size(); i++) {
@@ -88,12 +89,20 @@ public class PanelProyectos extends JScrollPane {
                 }
                 for (int k = 0; k < proyectos.get(i).getPaquete(j).getSize(); k++) {
                     if (proyectos.get(i).getPaquete(j).getArchivo(k) != null) {
+                        repetido = compararContenido(proyectos.get(i).getPaquete(j).getArchivo(k));
                         archivo = new DefaultMutableTreeNode(proyectos.get(i).getPaquete(j).getArchivo(k).getNombre());
+                        if (repetido) {
+                            this.setForeground(Color.red);
+                        }                      
                         modelo.insertNodeInto(archivo, paquete, 0);
                     }
                 }
             }
         }
+        
+
+        
+        
         JTree tree = new JTree(modelo);
         this.add(tree);
         this.setViewportView(tree);
@@ -132,6 +141,21 @@ public class PanelProyectos extends JScrollPane {
             }
         }
     }
+    
+    private boolean compararContenido(Archivo arch){
+        
+        boolean result = false;
+        for (int i = 0; i < proyectos.size(); i++) {
+            for (int j = 0; j < proyectos.get(i).getSize(); j++) {
+                for (int k = 0; k < proyectos.get(i).getPaquete(j).getSize(); k++) {
+                    if (proyectos.get(i).getPaquete(j).getArchivo(k).getNombre().equals(arch.getNombre())) {
+                        result = true;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     private TreeSelectionListener createSelectionListener() {
         return (TreeSelectionEvent e) -> {
@@ -145,7 +169,6 @@ public class PanelProyectos extends JScrollPane {
                     for (int k = 0; k < proyectos.get(i).getPaquete(j).getSize(); k++) {
                         if (obj.toString().equals(proyectos.get(i).getPaquete(j).getArchivo(k).getNombre())) {
                             text = proyectos.get(i).getPaquete(j).getArchivo(k).getText();
-
                         }
                     }
                 }
