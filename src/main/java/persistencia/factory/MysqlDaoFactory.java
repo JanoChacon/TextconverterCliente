@@ -22,10 +22,10 @@ public class MysqlDaoFactory extends DAOFactory {
     public MysqlDaoFactory() {
 
         MysqlDaoFactory.DRIVER = "com.mysql.jdbc.Driver";
-        MysqlDaoFactory.URL = "jdbc:mysql://localhost:3306/";
-        MysqlDaoFactory.BDNAME = "textconverter";
-        MysqlDaoFactory.USER = "root";
-        MysqlDaoFactory.CLAVE = "";
+        MysqlDaoFactory.URL = "jdbc:mysql://sql10.freemysqlhosting.net:3306/";
+        MysqlDaoFactory.BDNAME = "sql10208254";
+        MysqlDaoFactory.USER = "sql10208254";
+        MysqlDaoFactory.CLAVE = "rVzKULYtNU";
     }
 
     public static Connection createConnection() {
