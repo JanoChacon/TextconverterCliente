@@ -26,11 +26,12 @@ public interface ArchivoDao {
      * @param paq
      * @return 
      */
-    public boolean guardar(Archivo archivo);
+    public boolean guardar(Archivo archivo, int id);
     
     /**
      * Elimina un arhcivo a traves de su id
      * @param id
+     * @param Archivo
      * @return 
      */
     public boolean borrar(int id);

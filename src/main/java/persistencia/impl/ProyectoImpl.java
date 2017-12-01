@@ -79,9 +79,8 @@ public class ProyectoImpl implements ProyectoDao {
         boolean resultado = false;
 
         try {
-            PreparedStatement pstm = this.conn.prepareStatement(SQL_INSERT);
+            PreparedStatement pstm = this.conn.prepareStatement(SQL_INSERT);          
             pstm.setString(1, pro.getNombre());
-
             pstm.executeUpdate();
             resultado = true;
 
@@ -91,8 +90,6 @@ public class ProyectoImpl implements ProyectoDao {
         return resultado;
     }
     
-    
-
     @Override
     public boolean borrar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

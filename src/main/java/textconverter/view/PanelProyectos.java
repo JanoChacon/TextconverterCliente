@@ -100,6 +100,28 @@ public class PanelProyectos extends JScrollPane {
         tree.addTreeSelectionListener(createSelectionListener());
     }
 
+       /*
+    guarda el proyecto nuevo en la base de datos
+    */
+    
+    public boolean guardarProyecto(Proyecto pro) {
+        return proyectoDao.guardar(pro);
+    }
+    
+    /*
+    guarda el paquete nuevo en la base de datos
+    */
+    public boolean guardarPaquete(Paquete paq, int id_pro) {
+        return paqueteDao.guardar(paq, id_pro);
+    }
+    
+    /*
+    guarda el archivo nuevo en la base de datos
+    */
+    public boolean guardarArchivo(Archivo arch, int id_paq) {
+        return archivoDao.guardar(arch, id_paq);
+    }
+    
     public void crearListas() {
         
         proyectos = proyectoDao.listar();

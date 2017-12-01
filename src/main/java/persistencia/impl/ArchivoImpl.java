@@ -32,7 +32,7 @@ public class ArchivoImpl implements ArchivoDao {
      */
     private static final String SQL_SELECT = "select * from archivo where Paqueteid_paquete = ?";
 
-    private static final String SQL_INSERT = "insert into archivo(nombre) values (?)";
+    private static final String SQL_INSERT = "insert into archivo(nombre, Paqueteid_paquete) values (?, ?)";
 
     private static final String SQL_DELETE = "delete from archivo where id_archivo = ?";
 
@@ -80,14 +80,14 @@ public class ArchivoImpl implements ArchivoDao {
     }
 
     @Override
-    public boolean guardar(Archivo arch) {
+    public boolean guardar(Archivo arch, int id_paquete) {
 
         boolean resultado = false;
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_INSERT);
-//            pstm.setInt(1, mesa.getMesNumero());
-//            pstm.setInt(2, mesa.getMesReservado());
+            pstm.setString(1, arch.getNombre());
+            pstm.setInt(2, id_paquete);
             pstm.executeUpdate();
             resultado = true;
 

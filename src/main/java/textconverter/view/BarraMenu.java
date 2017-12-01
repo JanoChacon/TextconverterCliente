@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import persistencia.dao.ProyectoDao;
 import persistencia.factory.DAOFactory;
 import persistencia.factory.TipoBD;
+import textconverter.logic.Archivo;
+import textconverter.logic.Paquete;
 
 /**
  *
@@ -71,11 +73,19 @@ public class BarraMenu extends JPanel {
     private void crearProyectoActionPerformed(java.awt.event.ActionEvent evt) {
         String ax = "";
         ax = JOptionPane.showInputDialog("Ingrese un nombre: ");
-        if (!ax.equalsIgnoreCase("")) {
+        boolean ocupado = false;
+        for (int i = 0; i < pnp.proyectos.size(); i++) {
+            if (ax.toString().equals(pnp.proyectos.get(i).getNombre())) {
+                ocupado = true;
+            }
+        }
+
+        if (!ax.equalsIgnoreCase("") && !ocupado) {
             Proyecto pro = new Proyecto();
             pro.setNombre(ax);
-            pnp.proyectos.add(pro);
+            pnp.guardarProyecto(pro);
             pnp.cargarProyectos();
+
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un nombre correcto");
         }
@@ -83,27 +93,92 @@ public class BarraMenu extends JPanel {
     }
 
     private void crearPaqueteActionPerformed(java.awt.event.ActionEvent evt) {
-        
+
         JComboBox combo = new JComboBox();
-        
+
         String ax = "";
-        
+        boolean ocupado = false;
+        int index = 0;
         for (int i = 0; i < pnp.proyectos.size(); i++) {
             combo.addItem(pnp.proyectos.get(i).getNombre());
-        }      
-        ax = JOptionPane.showInputDialog(null,combo);
-        combo.addActionListener((ActionEvent e) -> {          
+        }
+        ax = JOptionPane.showInputDialog(null, combo);
+        combo.addActionListener((ActionEvent e) -> {
         });
-        
-        String select = combo.getSelectedItem().toString();
-        
-        System.out.println(select);
-        System.out.println(ax);
 
-        
+        String select = combo.getSelectedItem().toString();
+
+        for (int i = 0; i < pnp.proyectos.size(); i++) {
+            for (int j = 0; j < pnp.proyectos.get(i).getPaquetes().size(); j++) {
+                if (ax.toString().equals(pnp.proyectos.get(i).getPaquete(j).getNombre())) {
+                    ocupado = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < pnp.proyectos.size(); i++) {
+            if (combo.getSelectedItem().toString().equals(pnp.proyectos.get(i).getNombre())) {
+                index = pnp.proyectos.get(i).getId();
+            }
+        }
+
+        if (ocupado == false) {
+            Paquete paq = new Paquete();
+            paq.setNombre(ax);
+            pnp.guardarPaquete(paq, index);
+            pnp.cargarProyectos();
+        }else {
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre correcto");
+        }
+
     }
 
     private void cargarArchivosActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        JComboBox combo = new JComboBox();
+
+        String ax = "";
+        boolean ocupado = false;
+        int index = 0;
+
+        for (int i = 0; i < pnp.proyectos.size(); i++) {
+            for (int j = 0; j < pnp.proyectos.get(i).getPaquetes().size(); j++) {
+                combo.addItem(pnp.proyectos.get(i).getPaquetes().get(j).getNombre());
+            }
+        }
+
+        ax = JOptionPane.showInputDialog(null, combo);
+        combo.addActionListener((ActionEvent e) -> {
+        });
+
+        String select = combo.getSelectedItem().toString();
+
+        for (int i = 0; i < pnp.proyectos.size(); i++) {
+            for (int j = 0; j < pnp.proyectos.get(i).getPaquetes().size(); j++) {
+                for (int k = 0; k < pnp.proyectos.get(i).getPaquetes().get(j).getArchivos().size(); k++) {
+                    if (ax.toString().equals(pnp.proyectos.get(i).getPaquetes().get(j).getArchivos().get(k).getNombre())) {
+                        ocupado = true;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < pnp.proyectos.size(); i++) {
+            for (int j = 0; j < pnp.proyectos.get(i).getPaquetes().size(); j++) {
+                if (combo.getSelectedItem().toString().equals(pnp.proyectos.get(i).getPaquetes().get(j).getNombre())) {
+                    index = pnp.proyectos.get(i).getId();
+                }
+
+            }
+        }
+        if (ocupado == false) {
+            Archivo arch = new Archivo();
+            arch.setNombre(ax);
+            pnp.guardarArchivo(arch, index);
+            //pnp.setTransformPDF();
+            pnp.cargarProyectos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre correcto");
+        }
+
     }
 }
