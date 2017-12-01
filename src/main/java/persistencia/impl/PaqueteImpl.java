@@ -13,80 +13,81 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import persistencia.dao.PaqueteDao;
 import textconverter.logic.Proyecto;
 import persistencia.factory.DAOFactory;
 import persistencia.factory.MysqlDaoFactory;
-import persistencia.dao.ProyectoDao;
+import textconverter.logic.Paquete;
 
 /**
  *
  * @author dci
  */
-public class ProyectoImpl implements ProyectoDao {
+public class PaqueteImpl implements PaqueteDao {
 
     /**
-     * Consulta sql para obtener todas las mesas
+     * Consulta sql para obtener todas los paquetes
      */
-    private static final String SQL_SELECT = "select * from proyecto";
+    private static final String SQL_SELECT = "select * from paquete";
 
-    private static final String SQL_INSERT = "insert into proyecto(nombre) values (?)";
+    private static final String SQL_INSERT = "insert into paquete(nombre, Proyectoid_proyecto) values (?, ?)";
 
-    private static final String SQL_DELETE = "delete from proyecto where id_proyecto = ?";
+    private static final String SQL_DELETE = "delete from paquete where id_proyecto = ?";
 
-    private static final String SQL_UPDATE = "update proyecto set nombre = ? where id_proyecto = ?";
+    private static final String SQL_UPDATE = "update paquete set nombre = ? where id_proyecto = ?";
 
     private final Connection conn;
 
-    public ProyectoImpl() {
+    public PaqueteImpl() {
         this.conn = MysqlDaoFactory.createConnection();
     }
 
     @Override
-    public ArrayList<Proyecto> listar() {
+    public ArrayList<Paquete> listar(Proyecto pro) {
 
-        ArrayList<Proyecto> proyectos = new ArrayList<>();
+        ArrayList<Paquete> paquetes = new ArrayList<>();
         ResultSet rs;
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_SELECT);
             rs = pstm.executeQuery();
             if (!rs.next()) {
-                Logger.getLogger(ProyectoImpl.class.getName()).log(Level.INFO,
-                        "No hay Proyectos");
+                Logger.getLogger(PaqueteImpl.class.getName()).log(Level.INFO,
+                        "No hay Paquetes");
             } else {
 
                 do {
-                    Proyecto proj = new Proyecto();
-                    proj.setNombre(rs.getString("nombre"));
-                    System.out.println(proj.getNombre());
-                    proyectos.add(proj);
+                    Paquete paq = new Paquete();
+                    paq.setNombre(rs.getString("nombre"));
+
+                    paquetes.add(paq);
 
                 } while (rs.next());
 
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProyectoImpl.class.getName()).log(Level.SEVERE,
+            Logger.getLogger(PaqueteImpl.class.getName()).log(Level.SEVERE,
                     null, ex);
         }
 
-        return proyectos;
+        return paquetes;
     }
 
     @Override
-    public boolean guardar(Proyecto mesa) {
+    public boolean guardar(Paquete paq, int proyectoid) {
 
         boolean resultado = false;
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_INSERT);
-            pstm.setString(1, mesa.getNombre());
-
+            pstm.setString(1, paq.getNombre());
+            pstm.setInt(2, proyectoid);
             pstm.executeUpdate();
             resultado = true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProyectoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PaqueteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultado;
     }
@@ -97,12 +98,12 @@ public class ProyectoImpl implements ProyectoDao {
     }
 
     @Override
-    public Proyecto buscar(int id) {
+    public Paquete buscar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean editar(Proyecto mesa) {
+    public boolean editar(Paquete mesa) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

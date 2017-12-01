@@ -7,44 +7,45 @@ package persistencia.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import textconverter.logic.Paquete;
 import textconverter.logic.Proyecto;
 
 /**
  *
  * @author dci
  */
-public interface ProyectoDao {
+public interface PaqueteDao {
     /**
-     * Permite obtener todos los proyectos
+     * Permite obtener todas los paquetes
      * @return 
      */
-    public ArrayList<Proyecto> listar();
+    public ArrayList<Paquete> listar(Proyecto pro);
     
     /**
-     * Almacena un objeto de tipo proyecto
+     * Almacena un objeto de tipo paquete
      * @param proyecto
      * @return 
      */
-    public boolean guardar(Proyecto mesa);
+    public boolean guardar(Paquete paquete, int proyectoid);
     
     /**
-     * Elimina un proyecto a traves de su id
+     * Elimina un paquete a traves de su id
      * @param id
      * @return 
      */
     public boolean borrar(int id);
     
     /**
-     * Busca una proyecto en base a un id
+     * Busca un paquete en base a un id
      * @param id
      * @return 
      */
-    public Proyecto buscar(int id);
+    public Paquete buscar(int id);
 
     /**
-     * Permite editar los datos de un proyecto
-     * @param proyecto
+     * Permite editar los datos de un paquete
+     * @param paq
      * @return 
      */
-    public boolean editar(Proyecto mesa);
+    public boolean editar(Paquete paq);
 }

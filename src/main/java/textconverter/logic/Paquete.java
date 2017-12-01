@@ -13,13 +13,21 @@ import java.util.ArrayList;
  */
 public class Paquete {
     
+    private int id;
     private String nombre;
-    private ArrayList<Archivo> Archivos = new ArrayList<>();
+    private ArrayList<Archivo> Archivos;
 
-    public Paquete(String nombre) {
-        this.nombre = nombre;
+    public Paquete() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -39,5 +47,15 @@ public class Paquete {
     public void addArchivo(Archivo archivo){
         this.Archivos.add(archivo);
     }
+
+    public ArrayList<Archivo> getArchivos() {
+        return Archivos;
+    }
+
+    public void setArchivos(ArrayList<Archivo> Archivos) {
+        this.Archivos = Archivos;
+    }
      
+    
+    
 }

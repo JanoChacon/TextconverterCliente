@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Proyecto {
     
+    private int id;
     private String nombre;
     private ArrayList<Paquete> Paquetes = new ArrayList<>();
 
@@ -23,6 +24,14 @@ public class Proyecto {
         return nombre;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -38,6 +47,16 @@ public class Proyecto {
     public int getSize(){
         return this.Paquetes.size();
     }
+
+    public ArrayList<Paquete> getPaquetes() {
+        return Paquetes;
+    }
+
+    public void setPaquetes(ArrayList<Paquete> Paquetes) {
+        this.Paquetes = Paquetes;
+    }
+    
+    
     
     public void removePaquete(int i){
         

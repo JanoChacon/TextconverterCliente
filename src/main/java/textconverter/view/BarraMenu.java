@@ -10,10 +10,14 @@ import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import persistencia.dao.ProyectoDao;
+import persistencia.factory.DAOFactory;
+import persistencia.factory.TipoBD;
 
 /**
  *
@@ -81,17 +85,22 @@ public class BarraMenu extends JPanel {
     private void crearPaqueteActionPerformed(java.awt.event.ActionEvent evt) {
         
         JComboBox combo = new JComboBox();
+        
+        String ax = "";
+        
         for (int i = 0; i < pnp.proyectos.size(); i++) {
             combo.addItem(pnp.proyectos.get(i).getNombre());
-        }
-        String ax = JOptionPane.showInputDialog(combo);
-        combo.addActionListener((ActionEvent e) -> {
-            
-        String select = combo.getSelectedItem().toString();
-            
+        }      
+        ax = JOptionPane.showInputDialog(null,combo);
+        combo.addActionListener((ActionEvent e) -> {          
         });
         
+        String select = combo.getSelectedItem().toString();
+        
+        System.out.println(select);
         System.out.println(ax);
+
+        
     }
 
     private void cargarArchivosActionPerformed(java.awt.event.ActionEvent evt) {

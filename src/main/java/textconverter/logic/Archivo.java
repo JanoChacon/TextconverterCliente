@@ -11,12 +11,19 @@ package textconverter.logic;
  */
 public class Archivo {
     
+    private int id;
     private String nombre;
     private String text;
 
-    public Archivo(String nombre, String text) {
-        this.nombre = nombre;
-        this.text = text;
+    public Archivo() {
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

@@ -18,6 +18,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import persistencia.dao.ArchivoDao;
+import persistencia.dao.PaqueteDao;
 import persistencia.dao.ProyectoDao;
 import persistencia.factory.DAOFactory;
 import persistencia.factory.TipoBD;
@@ -33,24 +35,20 @@ public class PanelProyectos extends JScrollPane {
     DefaultTreeModel modelo = null;
     private PanelVistaProyecto pvp;
     private static DAOFactory fabrica;
-    public List<Proyecto> proyectos;
+    public ArrayList<Proyecto> proyectos;
 
     public PanelProyectos(PanelVistaProyecto pvp) {
-        this.pvp = pvp;
-        
+        this.pvp = pvp;   
         this.initComponents();
     }
 
-    private void initComponents() {
-        
-        fabrica = DAOFactory.getFactory(TipoBD.MYSQL);
-        
+    private void initComponents() {      
+        fabrica = DAOFactory.getFactory(TipoBD.MYSQL);     
         ProyectoDao proyectoDao = fabrica.getProyectoDao();
         this.proyectos = proyectoDao.listar();
 
         cargarProyectos();
-        
-        
+
     }
 
     void cargarProyectos() {
@@ -62,7 +60,8 @@ public class PanelProyectos extends JScrollPane {
 
         titulo = new DefaultMutableTreeNode("Proyectos");
         modelo = new DefaultTreeModel(titulo);
-
+        
+//        proyectos.get(0).setPaquetes(PaqueteDao.listar(proyectos.get(i)));
         for (int i = 0; i < proyectos.size(); i++) {
             proyecto = new DefaultMutableTreeNode(proyectos.get(i).getNombre());
             modelo.insertNodeInto(proyecto, titulo, 0);

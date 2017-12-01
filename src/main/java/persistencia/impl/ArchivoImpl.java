@@ -13,80 +13,83 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import persistencia.dao.ArchivoDao;
+import persistencia.dao.PaqueteDao;
 import textconverter.logic.Proyecto;
 import persistencia.factory.DAOFactory;
 import persistencia.factory.MysqlDaoFactory;
-import persistencia.dao.ProyectoDao;
+import textconverter.logic.Archivo;
+import textconverter.logic.Paquete;
 
 /**
  *
  * @author dci
  */
-public class ProyectoImpl implements ProyectoDao {
+public class ArchivoImpl implements ArchivoDao {
 
     /**
-     * Consulta sql para obtener todas las mesas
+     * Consulta sql para obtener todas los paquetes
      */
-    private static final String SQL_SELECT = "select * from proyecto";
+    private static final String SQL_SELECT = "select * from archivo";
 
-    private static final String SQL_INSERT = "insert into proyecto(nombre) values (?)";
+    private static final String SQL_INSERT = "insert into archivo(nombre) values (?)";
 
-    private static final String SQL_DELETE = "delete from proyecto where id_proyecto = ?";
+    private static final String SQL_DELETE = "delete from archivo where id_archivo = ?";
 
-    private static final String SQL_UPDATE = "update proyecto set nombre = ? where id_proyecto = ?";
+    private static final String SQL_UPDATE = "update archivo set nombre = ? where id_archivo = ?";
 
     private final Connection conn;
 
-    public ProyectoImpl() {
+    public ArchivoImpl() {
         this.conn = MysqlDaoFactory.createConnection();
     }
 
     @Override
-    public ArrayList<Proyecto> listar() {
+    public ArrayList<Archivo> listar(Paquete paq) {
 
-        ArrayList<Proyecto> proyectos = new ArrayList<>();
+        ArrayList<Archivo> archivos = new ArrayList<>();
         ResultSet rs;
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_SELECT);
             rs = pstm.executeQuery();
             if (!rs.next()) {
-                Logger.getLogger(ProyectoImpl.class.getName()).log(Level.INFO,
-                        "No hay Proyectos");
+                Logger.getLogger(ArchivoImpl.class.getName()).log(Level.INFO,
+                        "No hay Archivos");
             } else {
 
                 do {
-                    Proyecto proj = new Proyecto();
-                    proj.setNombre(rs.getString("nombre"));
-                    System.out.println(proj.getNombre());
-                    proyectos.add(proj);
+                    Archivo arch = new Archivo();
+                    arch.setNombre(rs.getString("nombre"));
+                    System.out.println(arch.getNombre());
+                    archivos.add(arch);
 
                 } while (rs.next());
 
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProyectoImpl.class.getName()).log(Level.SEVERE,
+            Logger.getLogger(ArchivoImpl.class.getName()).log(Level.SEVERE,
                     null, ex);
         }
 
-        return proyectos;
+        return archivos;
     }
 
     @Override
-    public boolean guardar(Proyecto mesa) {
+    public boolean guardar(Archivo arch) {
 
         boolean resultado = false;
 
         try {
             PreparedStatement pstm = this.conn.prepareStatement(SQL_INSERT);
-            pstm.setString(1, mesa.getNombre());
-
+//            pstm.setInt(1, mesa.getMesNumero());
+//            pstm.setInt(2, mesa.getMesReservado());
             pstm.executeUpdate();
             resultado = true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProyectoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArchivoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultado;
     }
@@ -97,12 +100,12 @@ public class ProyectoImpl implements ProyectoDao {
     }
 
     @Override
-    public Proyecto buscar(int id) {
+    public Archivo buscar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean editar(Proyecto mesa) {
+    public boolean editar(Archivo mesa) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
